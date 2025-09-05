@@ -3,7 +3,7 @@ default:
     @just --list
 
 # Copy GAME screenshots
-[group('Utilities')]
+[group('gaming')]
 copy-screenshots:
     #!/usr/bin/env bash
     source /usr/lib/ujust/ujust.sh
@@ -35,7 +35,7 @@ copy-screenshots:
     esac
 
 # Install Go tools
-[group('Install')]
+[group('install')]
 hyperreal-install-go-tools:
     #!/usr/bin/env bash
     go_tools=(
@@ -52,7 +52,7 @@ hyperreal-install-go-tools:
     done
 
 # Install Python tools
-[group('Install')]
+[group('install')]
 hyperreal-install-python-tools:
     #!/usr/bin/env bash
     distrobox enter --name fedora-toolbox-42 -- pipx install --include-deps ansible --force
@@ -85,14 +85,14 @@ hyperreal-install-python-tools:
     done
 
 # Upgrade Python tools
-[group('Install')]
+[group('install')]
 hyperreal-upgrade-python-tools:
     #!/usr/bin/env bash
     distrobox enter --name fedora-toolbox-42 -- \
       pipx list --short | awk '{print $1}' | xargs pipx upgrade
 
 # Install Node tools
-[group('Install')]
+[group('install')]
 hyperreal-install-node-tools:
     #!/usr/bin/env bash
     node_tools=(
@@ -107,37 +107,37 @@ hyperreal-install-node-tools:
     done
 
 # Install hyperreal flatpaks
-[group('Install')]
+[group('install')]
 hyperreal-install-flatpaks:
     #!/usr/bin/env bash
     set -euo pipefail
 
     echo "Installing Flatpaks..."
-    xargs -a <(curl --retry 3 -sL https://gitlab.hyperreal.coffee/ublue/aurora-hyperreal/-/raw/main/repo_files/flatpaks) flatpak --system -y install
+    xargs -a <(curl --retry 3 -sL https://opengist.hyperreal.coffee/hyperreal/267127af54cf40678debb1ed618eefe3/raw/HEAD/bazzite-flatpaks.txt) flatpak --system -y install
     echo "Flatpaks installation complete."
 
 # Setup pet distroboxes
-[group('Setup')]
+[group('setup')]
 hyperreal-setup-distroboxes:
     #!/usr/bin/env bash
     set -euo pipefail
 
     if ! podman container exists debian-toolbox-13; then
-      distrobox create -i gitlab.hyperreal.coffee:5050/ublue/toolboxes/debian-toolbox:latest -n debian-toolbox-13
+      distrobox create -i github.com/hyperreal64/toolboxes/debian-toolbox:latest -n debian-toolbox-13
       echo "Successfully created debian-toolbox-13"
     else
       echo "Pet container debian-toolbox-13 already exists. Ignoring."
     fi
 
     if ! podman container exists fedora-toolbox-42; then
-      distrobox create -i gitlab.hyperreal.coffee:5050/ublue/toolboxes/fedora-toolbox:latest -n fedora-toolbox-42
+      distrobox create -i github.com/hyperreal64/toolboxes/fedora-toolbox:latest -n fedora-toolbox-42
       echo "Successfully created fedora-toolbox-42"
     else
       echo "Pet container fedora-toolbox-42 already exists. Ignoring."
     fi
 
 # Setup git repos locally
-[group('Setup')]
+[group('setup')]
 hyperreal-setup-repos:
     #!/usr/bin/env bash
     set -euo pipefail
@@ -148,28 +148,28 @@ hyperreal-setup-repos:
     fi
 
     echo "Preparing local git directories..."
-    mkdir -p "${HOME}/repos/gitlab.hyperreal.coffee/hyperreal"
-    mkdir -p "${HOME}/repos/gitlab.hyperreal.coffee/ublue"
+    mkdir -p "${HOME}/repos/github.com/hyperreal64"
+    mkdir -p "${HOME}/repos/git.hyperreal.coffee/hyperreal"
 
-    echo "Cloning repos from gitlab.hyperreal.coffee/hyperreal..."
-    hyperreal_repos=("ansible-homelab" "dotfiles")
+    echo "Cloning repos from github.com/hyperreal64..."
+    hyperreal_repos=("bluebuild-aurora" "bluebuild-bazzite" "toolboxes")
     for repo in "${hyperreal_repos[@]}"; do
-      git clone "git@gitlab.hyperreal.coffee:hyperreal/${repo}.git" "${HOME}/repos/gitlab.hyperreal.coffee/hyperreal/${repo}"
+      git clone "git@github.com:hyperreal64/${repo}.git" "${HOME}/repos/github.com/hyperreal64/${repo}"
     done
 
-    echo "Cloning repos from gitlab.hyperreal.coffee/ublue..."
-    ublue_repos=("aurora-hyperreal" "bazzite-hyperreal" "toolboxes")
-    for repo in "${ublue_repos[@]}"; do
-      git clone "git@gitlab.hyperreal.coffee:ublue/${repo}.git" "${HOME}/repos/gitlab.hyperreal.coffee/ublue/${repo}"
+    echo "Cloning repos from git.hyperreal.coffee..."
+    git_repos=("ansible-homelab" "dotfiles")
+    for repo in "${git_repos[@]}"; do
+      git clone "git@git.hyperreal.coffee:hyperreal/${repo}.git" "${HOME}/repos/git.hyperreal.coffee/hyperreal/${repo}"
     done
 
 # Setup hyperreal configs
-[group('Setup')]
+[group('setup')]
 hyperreal-setup-cli:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    DOTFILES_DIR="${HOME}/repos/gitlab.hyperreal.coffee/hyperreal/dotfiles"
+    DOTFILES_DIR="${HOME}/repos/git.hyperreal.coffee/hyperreal/dotfiles"
     if [ ! -d "$DOTFILES_DIR" ]; then
       echo "${DOTFILES_DIR} not found."
       exit 1
