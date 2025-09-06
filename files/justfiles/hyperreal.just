@@ -48,14 +48,14 @@ hyperreal-install-go-tools:
       "github.com/sigstore/cosign/v2/cmd/cosign@latest"
     )
     for x in "${go_tools[@]}"; do
-      distrobox enter --name fedora-toolbox-42 -- go install "$x"
+      distrobox enter --name fedora-distrobox-42 -- go install "$x"
     done
 
 # Install Python tools
 [group('install')]
 hyperreal-install-python-tools:
     #!/usr/bin/env bash
-    distrobox enter --name fedora-toolbox-42 -- pipx install --include-deps ansible --force
+    distrobox enter --name fedora-distrobox-42 -- pipx install --include-deps ansible --force
 
     py_tools=(
       "black"
@@ -71,7 +71,7 @@ hyperreal-install-python-tools:
       "print-wp-sources"
     )
     for x in "${py_tools[@]}"; do
-      distrobox enter --name fedora-toolbox-42 -- pipx install "$x"
+      distrobox enter --name fedora-distrobox-42 -- pipx install "$x"
     done
 
     bpy_inject_tools=(
@@ -81,14 +81,14 @@ hyperreal-install-python-tools:
       "qbittorrent-api"
     )
     for x in "${bpy_inject_tools[@]}"; do
-      distrobox enter --name fedora-toolbox-42 -- pipx inject bpython "$x"
+      distrobox enter --name fedora-distrobox-42 -- pipx inject bpython "$x"
     done
 
 # Upgrade Python tools
 [group('install')]
 hyperreal-upgrade-python-tools:
     #!/usr/bin/env bash
-    distrobox enter --name fedora-toolbox-42 -- \
+    distrobox enter --name fedora-distrobox-42 -- \
       pipx list --short | awk '{print $1}' | xargs pipx upgrade
 
 # Install Node tools
@@ -103,7 +103,7 @@ hyperreal-install-node-tools:
       "stylelint"
     )
     for x in "${node_tools[@]}"; do
-      distrobox enter --name fedora-toolbox-42 -- sudo npm install -g "$x"
+      distrobox enter --name fedora-distrobox-42 -- sudo npm install -g "$x"
     done
 
 # Install hyperreal flatpaks
@@ -122,18 +122,18 @@ hyperreal-setup-distroboxes:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    if ! podman container exists debian-toolbox-13; then
-      distrobox create -i github.com/hyperreal64/toolboxes/debian-toolbox:latest -n debian-toolbox-13
-      echo "Successfully created debian-toolbox-13"
+    if ! podman container exists debian-distrobox-13; then
+      distrobox create -i ghcr.io/hyperreal64/debian-distrobox:latest -n debian-distrobox-13
+      echo "Successfully created debian-distrobox-13"
     else
-      echo "Pet container debian-toolbox-13 already exists. Ignoring."
+      echo "Pet container debian-distrobox-13 already exists. Ignoring."
     fi
 
-    if ! podman container exists fedora-toolbox-42; then
-      distrobox create -i github.com/hyperreal64/toolboxes/fedora-toolbox:latest -n fedora-toolbox-42
-      echo "Successfully created fedora-toolbox-42"
+    if ! podman container exists fedora-distrobox-42; then
+      distrobox create -i ghcr.io/hyperreal64/fedora-distrobox:latest -n fedora-distrobox-42
+      echo "Successfully created fedora-distrobox-42"
     else
-      echo "Pet container fedora-toolbox-42 already exists. Ignoring."
+      echo "Pet container fedora-distrobox-42 already exists. Ignoring."
     fi
 
 # Setup git repos locally
