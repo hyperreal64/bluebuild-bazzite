@@ -4,7 +4,7 @@ This is my custom build of UBlue OS Bazzite. It isn't anything remarkable.
 
 ## Features
 
-* Based on `bazzite-nvidia-open:stable`.
+* Based on `bazzite-gnome-nvidia:stable`.
 * [Bazzite features](https://bazzite.gg)
 * atop
 * borgbackup
