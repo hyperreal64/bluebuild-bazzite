@@ -167,7 +167,7 @@ hyperreal-setup-repos:
 
     echo "Preparing local git directories..."
     mkdir -p "${HOME}/repos/github.com/hyperreal64"
-    mkdir -p "${HOME}/repos/git.hyperreal.coffee/hyperreal"
+    mkdir -p "${HOME}/repos/codeberg.org/hyperreal"
 
     echo "Cloning repos from github.com/hyperreal64..."
     hyperreal_repos=("bluebuild-aurora" "bluebuild-bazzite" "toolboxes")
@@ -175,10 +175,10 @@ hyperreal-setup-repos:
       git clone "git@github.com:hyperreal64/${repo}.git" "${HOME}/repos/github.com/hyperreal64/${repo}"
     done
 
-    echo "Cloning repos from git.hyperreal.coffee..."
+    echo "Cloning repos from codeberg.org..."
     git_repos=("ansible-homelab" "dotfiles")
     for repo in "${git_repos[@]}"; do
-      git clone "git@git.hyperreal.coffee:hyperreal/${repo}.git" "${HOME}/repos/git.hyperreal.coffee/hyperreal/${repo}"
+      git clone "git@codeberg.org:hyperreal/${repo}.git" "${HOME}/repos/codeberg.org/hyperreal/${repo}"
     done
 
 # Setup hyperreal configs
@@ -187,7 +187,7 @@ hyperreal-setup-cli:
     #!/usr/bin/env bash
     set -euo pipefail
 
-    DOTFILES_DIR="${HOME}/repos/git.hyperreal.coffee/hyperreal/dotfiles"
+    DOTFILES_DIR="${HOME}/repos/codeberg.org/hyperreal/dotfiles"
     if [ ! -d "$DOTFILES_DIR" ]; then
       echo "${DOTFILES_DIR} not found."
       exit 1
