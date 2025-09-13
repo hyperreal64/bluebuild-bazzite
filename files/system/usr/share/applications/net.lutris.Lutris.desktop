@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Lutris
+StartupWMClass=Lutris
+Comment=Video Game Preservation Platform
+Categories=Game;
+Keywords=gaming;wine;emulator;
+Exec=env PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION=python GTK_THEME=Colloid-Dark lutris %U
+Icon=net.lutris.Lutris
+Terminal=false
+Type=Application
+StartupNotify=true
+MimeType=x-scheme-handler/lutris;
+X-GNOME-UsesNotifications=true
+X-Desktop-File-Install-Version=0.28

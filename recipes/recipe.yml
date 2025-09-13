@@ -72,6 +72,20 @@ modules:
           - org.gajim.Gajim
           - org.wireshark.Wireshark
 
+  - type: gnome-extensions
+    install:
+      - Clipboard Indicator
+      - Quake Terminal
+      - Switcher
+      - Time from start (Uptime)
+      - Weather O'Clock
+
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - JetBrainsMono
+        - GeistMono
+
   - type: script
     snippets:
       - "wget https://files.hyperreal.coffee/gtk-themes.tar.gz -O gtk-themes.tar.gz"
