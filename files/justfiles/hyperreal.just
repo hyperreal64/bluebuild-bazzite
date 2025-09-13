@@ -170,13 +170,13 @@ hyperreal-setup-repos:
     mkdir -p "${HOME}/repos/codeberg.org/hyperreal"
 
     echo "Cloning repos from github.com/hyperreal64..."
-    hyperreal_repos=("bluebuild-aurora" "bluebuild-bazzite" "toolboxes")
+    hyperreal_repos=("bluebuild-hyperreal" "distroboxes")
     for repo in "${hyperreal_repos[@]}"; do
       git clone "git@github.com:hyperreal64/${repo}.git" "${HOME}/repos/github.com/hyperreal64/${repo}"
     done
 
     echo "Cloning repos from codeberg.org..."
-    git_repos=("ansible-homelab" "dotfiles")
+    git_repos=("ansible-homelab" "dotfiles" "podman-services" "qbt-helper")
     for repo in "${git_repos[@]}"; do
       git clone "git@codeberg.org:hyperreal/${repo}.git" "${HOME}/repos/codeberg.org/hyperreal/${repo}"
     done
