@@ -74,11 +74,11 @@ modules:
 
   - type: gnome-extensions
     install:
-      - Clipboard Indicator
-      - Quake Terminal
-      - Switcher
-      - Time from start (Uptime)
-      - Weather O'Clock
+      - 779 # Clipboard Indicator
+      - 6307 # Quake Terminal
+      - 973 # Switcher
+      - 7993 # Time from start (Uptime)
+      - 5470 # Weather O'Clock
 
   - type: fonts
     fonts:
