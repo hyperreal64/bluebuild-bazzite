@@ -1,11 +1,13 @@
-# bluebuild-bazzite
+# bluebuild-hyperreal
 
-This is my custom build of UBlue OS Bazzite. It isn't anything remarkable.
+This is my custom build of UBlue OS Bazzite and UBlue OS Bluefin, which I use on my desktop and laptop, respectively.
 
 ## Features
 
-* Based on `bazzite-gnome-nvidia:stable`.
+* Bazzite image is based on `bazzite-gnome-nvidia:stable`.
+* Bluefin image is based on `bluefin-dx:latest`.
 * [Bazzite features](https://bazzite.gg)
+* [Bluefin developer features](https://projectbluefin.io/)
 * atop
 * borgbackup
 * borgmatic
@@ -19,7 +21,7 @@ I'm not sure if the xdg-desktop-portals are included by upstream Bazzite, but so
 
 Nmap is a lot easier to deal with if I just include it on the host. Otherwise I'd have to configure a rootful Distrobox, which is more cumbersome.
 
-In contrast to the default Bazzite settings, the following systemd units are disabled by default in this build:
+In contrast to the default UBlue settings, the following systemd units are disabled by default in this build:
 
 * bluetooth.service
 * cups.service
@@ -29,7 +31,14 @@ In contrast to the default Bazzite settings, the following systemd units are dis
 
 ## Installation
 
+### Bazzite
+
 ```shell
 sudo bootc switch --enforce-container-sigpolicy ghcr.io/hyperreal64/bluebuild-bazzite:latest
-sudo systemctl reboot
+```
+
+### Bluefin
+
+```shell
+sudo bootc switch --enforce-container-sigpolicy ghcr.io/hyperreal64/bluebuild-bluefin:latest
 ```

@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+# image will be published to git.hyperreal.coffee/hyperreal/bluebuild-bazzite
+name: bluebuild-bazzite
+# description will be included in the image's metadata
+description: hyperreal's customized Bazzite image
+
+# the base image to build on top of (FROM) and the version tag to use
+base-image: ghcr.io/ublue-os/bazzite-gnome-nvidia
+image-version: stable
+
+# module configuration, executed in order
+# you can include multiple instances of the same module
+modules:
+  - type: files
+    files:
+      - source: system-bazzite
+        destination: / # copies files/system-bazzite/* (* means everything inside it) into your image's root folder /
+
+  - type: dnf
+    install:
+      packages:
+        - atop
+        - borgbackup
+        - borgmatic
+        - btrfs-assistant
+        - incus
+        - incus-agent
+        - nmap
+        - node-exporter
+        - xdg-desktop-portal
+        - xdg-desktop-portal-gtk
+        - xdg-desktop-portal-kde
+    replace:
+      - from-repo: fedora
+        packages:
+          - old: nano-default-editor
+            new: vim-default-editor
+
+  - type: justfiles
+    validate: true
+
+  - type: systemd
+    system:
+      enabled:
+        - atop.service
+        - atopacct.service
+        - atop-rotate.timer
+        - prometheus-node-exporter.service
+        - tailscaled.service
+      disabled:
+        - bluetooth.service
+        - cups.service
+        - zfs-mount.service
+        - zfs-share.service
+        - zfs-zed.service
+
+  - type: default-flatpaks
+    configurations:
+      - scope: user
+        install:
+          - app.zen_browser.zen
+          - com.bitwarden.desktop
+          - com.calibre_ebook.calibre
+          - com.discordapp.Discord
+          - com.github.iwalton3.jellyfin-media-player
+          - com.nextcloud.desktopclient.nextcloud
+          - fi.skyjake.Lagrange
+          - io.podman_desktop.PodmanDesktop
+          - md.obsidian.Obsidian
+          - net.ankiweb.Anki
+          - org.gajim.Gajim
+          - org.wireshark.Wireshark
+
+  - type: gnome-extensions
+    install:
+      - 779 # Clipboard Indicator
+      - 6307 # Quake Terminal
+      - 973 # Switcher
+      - 7993 # Time from start (Uptime)
+      - 5470 # Weather O'Clock
+
+  - type: fonts
+    fonts:
+      nerd-fonts:
+        - JetBrainsMono
+        - GeistMono
+
+  - type: script
+    snippets:
+      - "wget https://files.hyperreal.coffee/gtk-themes.tar.gz -O gtk-themes.tar.gz"
+      - "tar xvf gtk-themes.tar.gz"
+      - "cp -rf gtk-themes/Colloid /usr/share/themes/"
+      - "cp -rf gtk-themes/Colloid-Dark /usr/share/themes/"
+      - "rm -rf gtk-themes gtk-themes.tar.gz"
+
+  - type: signing # this sets up the proper policy & signing files for signed images to work fully
