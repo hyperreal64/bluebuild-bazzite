@@ -106,34 +106,6 @@ hyperreal-install-node-tools:
       distrobox enter --name fedora-distrobox-42 -- sudo npm install -g "$x"
     done
 
-# Install hyperreal flatpaks
-[group('install')]
-hyperreal-install-bazzite-flatpaks:
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    echo "Installing Flatpaks..."
-    xargs -a <(curl --retry 3 -sL https://opengist.hyperreal.coffee/hyperreal/267127af54cf40678debb1ed618eefe3/raw/HEAD/bazzite-flatpaks.txt) flatpak --system -y install
-    echo "Flatpaks installation complete."
-
-[group('install')]
-hyperreal-install-bazzite-gnome-flatpaks:
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    echo "Installing Bazzite GNOME Flatpaks..."
-    xargs -a <(curl --retry 3 -sL https://opengist.hyperreal.coffee/hyperreal/2c451436c9c64f3b9d7e9d95879d5789/raw/HEAD/bazzite-gnome-flatpaks.txt) flatpak --system -y install
-    echo "Bazzite GNOME Flatpaks installation complete."
-
-[group('install')]
-hyperreal-install-bazzite-kde-flatpaks:
-    #!/usr/bin/env bash
-    set -euo pipefail
-
-    echo "Installing Bazzite KDE Flatpaks..."
-    xargs -a <(curl --retry 3 -sL https://opengist.hyperreal.coffee/hyperreal/3886f8d85eae47649918c0bff48978b6/raw/HEAD/bazzite-kde-flatpaks.txt) flatpak --system -y install
-    echo "Bazzite KDE Flatpaks installation complete."
-
 # Setup pet distroboxes
 [group('setup')]
 hyperreal-setup-distroboxes:
@@ -172,12 +144,18 @@ hyperreal-setup-repos:
     echo "Cloning repos from github.com/hyperreal64..."
     hyperreal_repos=("bluebuild-hyperreal" "distroboxes")
     for repo in "${hyperreal_repos[@]}"; do
+      if [ -d "${HOME}/repos/gitub.com/hyperreal64/${repo}" ]; then
+        rm -rf "${HOME}/repos/github.com/hyperreal64/${repo}"
+      fi
       git clone "git@github.com:hyperreal64/${repo}.git" "${HOME}/repos/github.com/hyperreal64/${repo}"
     done
 
     echo "Cloning repos from codeberg.org..."
     git_repos=("ansible-homelab" "dotfiles" "podman-services" "qbt-helper")
     for repo in "${git_repos[@]}"; do
+      if [ -d "${HOME}/repos/codeberg.org/hyperreal/${repo}" ]; then
+        rm -rf "${HOME}/repos/codeberg.org/hyperreal/${repo}"
+      fi
       git clone "git@codeberg.org:hyperreal/${repo}.git" "${HOME}/repos/codeberg.org/hyperreal/${repo}"
     done
 
