@@ -72,4 +72,12 @@ modules:
           - org.gajim.Gajim
           - org.wireshark.Wireshark
 
+  - type: script
+    snippets:
+      - "wget https://files.hyperreal.coffee/gtk-themes.tar.gz -O gtk-themes.tar.gz"
+      - "tar xvf gtk-themes.tar.gz"
+      - "cp -rf gtk-themes/Colloid /usr/share/themes/"
+      - "cp -rf gtk-themes/Colloid-Dark /usr/share/themes/"
+      - "rm -rf gtk-themes gtk-themes.tar.gz"
+
   - type: signing # this sets up the proper policy & signing files for signed images to work fully
