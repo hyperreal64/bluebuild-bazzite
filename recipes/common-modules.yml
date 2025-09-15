@@ -5,12 +5,16 @@ modules:
         destination: /
 
   - type: dnf
+    repos:
+      files:
+        - https://opengist.hyperreal.coffee/hyperreal64/vscodium/raw/HEAD/vscodium.repo
     install:
       packages:
         - atop
         - borgbackup
         - borgmatic
         - btrfs-assistant
+        - codium
         - incus
         - incus-agent
         - nmap

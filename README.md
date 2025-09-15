@@ -12,6 +12,7 @@ This is my custom build of UBlue OS Bazzite and UBlue OS Bluefin, which I use on
 * borgbackup
 * borgmatic
 * btrfs-assistant
+* codium
 * incus
 * nmap
 * Prometheus node-exporter
