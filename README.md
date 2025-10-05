@@ -5,14 +5,13 @@ This is my custom build of UBlue OS Bazzite and UBlue OS Bluefin, which I use on
 ## Features
 
 * Bazzite image is based on `bazzite-gnome-nvidia:stable`.
-* Bluefin image is based on `bluefin-dx:latest`.
+* Bluefin image is based on `bluefin:latest`.
 * [Bazzite features](https://bazzite.gg)
 * [Bluefin developer features](https://projectbluefin.io/)
 * atop
 * borgbackup
 * borgmatic
 * btrfs-assistant
-* codium
 * incus
 * nmap
 * Prometheus node-exporter

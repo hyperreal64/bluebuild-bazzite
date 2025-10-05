@@ -5,16 +5,12 @@ modules:
         destination: /
 
   - type: dnf
-    repos:
-      files:
-        - https://opengist.hyperreal.coffee/hyperreal64/vscodium/raw/HEAD/vscodium.repo
     install:
       packages:
         - atop
         - borgbackup
         - borgmatic
         - btrfs-assistant
-        - codium
         - incus
         - incus-agent
         - nmap
@@ -56,9 +52,8 @@ modules:
           - com.github.iwalton3.jellyfin-media-player
           - com.nextcloud.desktopclient.nextcloud
           - fi.skyjake.Lagrange
-          - md.obsidian.Obsidian
           - net.ankiweb.Anki
-          - org.gajim.Gajim
+          - org.qownnotes.QOwnNotes
           - org.wireshark.Wireshark
 
   - type: gnome-extensions
@@ -67,6 +62,7 @@ modules:
       - 6307 # Quake Terminal
       - 973 # Switcher
       - 7993 # Time from start (Uptime)
+      - 570 # Todo.txt
       - 5470 # Weather O'Clock
 
   - type: fonts
